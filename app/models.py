@@ -27,6 +27,7 @@ class Category(Base):
     created_at=Column(DateTime(timezone=True),server_default=func.now())
 
     user=relationship("User",back_populates="categories")
+    expenses = relationship("Expense", back_populates="category")
 
 class Income(Base):
     __tablename__="incomes"
