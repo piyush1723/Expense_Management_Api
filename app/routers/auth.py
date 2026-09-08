@@ -18,6 +18,10 @@ router=APIRouter(
 def hash_password(password:str):
     return pwd_context.hash(password)
 
+def verify_password(plain_password:str,hashed_password:str):
+    return pwd_context.verify(plain_password,hashed_password)
+
+
 @router.post(
     "/register",
     response_model=UserResponse,
@@ -34,7 +38,7 @@ def register_user(user:UserCreate,db:Session=Depends(get_db)):
             detail="Username already exists"
         )
     hashed_password=hash_password(user.password)
-    
+
     new_user=User(
         username=user.username,
         hashed_password=hashed_password
